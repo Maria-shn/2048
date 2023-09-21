@@ -1,7 +1,13 @@
+import java.util.Scanner;
+
 public class 2048Game {
 
     public static void main(String[] args) {
-
+        Board myBoard = new Board;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter your move (R/L/U/D): ");
+          myBoard.direction() = scanner.nextLine();
+          
       
     }
     
