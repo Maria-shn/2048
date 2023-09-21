@@ -13,6 +13,8 @@ public class Tile {
     public Tile(int x){
         switch(x){
 
+        case 0:
+            this.color = new Color(0, 0, 0);
         case 2:
             this.color = new Color(208, 146, 139);
         case 4:
