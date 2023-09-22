@@ -33,7 +33,7 @@ public class Board {
             case 'U':
                for(int i = 0; i< SIZE; i++){
                  for(int j = 1; j< SIZE; j++){
-                    if(board[j-1][i] == null){
+                    if(board[j-1][i] == null && board[j][i] != null){
                         board[j-1][i] = board[j][i];
                         board[j][i] = null;
                         change = true;
@@ -44,7 +44,7 @@ public class Board {
             case 'D':
                 for(int i = 0; i< SIZE; i++){
                  for(int j = SIZE-1; j<= 0; j--){
-                    if(board[j+1][i] == null){
+                    if(board[j+1][i] == null && board[j][i] != null){
                         board[j+1][i] = board[j][i];
                         board[j][i] = null;
                         change = true;
@@ -66,8 +66,8 @@ public class Board {
             case 'L':
                 for(int i = 0; i< SIZE; i++){
                  for(int j = 1; j< SIZE; j++){
-                    if(board[i][j-1] == null){
-                        board[i][j-1] = board[j][i];
+                    if(board[i][j-1] == null && board[i][j] != null){
+                        board[i][j-1] = board[i][j];
                         board[i][j] = null;
                         change = true;
                     }
@@ -85,8 +85,10 @@ public class Board {
             case 'U':
                for(int i = 0; i< SIZE; i++){
                  for(int j = 1; j< SIZE; j++){
-                    if(board[j-1][i] == board[j][i]){
-                        board[j-1][i] = new Tile(2*board[j-1][i].getValue());
+                    if(board[j][i]!=null && board[j-1][i] != null && board[j-1][i].getValue() == board[j][i].getValue()){
+                        System.out.println("theres a double");
+                        System.out.println(board[j][i].getValue());
+                        board[j-1][i] = new Tile(2*(board[j][i].getValue()));
                         board[j][i] = null;
                         change = true;
                     }
@@ -96,8 +98,8 @@ public class Board {
             case 'D':
                 for(int i = 0; i< SIZE; i++){
                  for(int j = SIZE-1; j<= 0; j--){
-                    if(board[j+1][i] == board[j][i]){
-                        board[j+1][i] = new Tile(2*board[j+1][i].getValue());
+                    if(board[j][i]!=null && board[j+1][i] != null && board[j+1][i].getValue() == board[j][i].getValue()){
+                        board[j+1][i] = new Tile(2*(board[j][i].getValue()));
                         board[j][i] = null;
                         change = true;
                     }
@@ -107,8 +109,8 @@ public class Board {
             case 'R':
                 for(int i = 0; i< SIZE; i++){
                  for(int j = SIZE-2; j>= 0; j--){
-                    if(board[i][j+1] == board[i][j] && board[i][j]!=null){
-                        board[i][j+1] = new Tile(2*board[i][j+1].getValue());
+                    if(board[i][j]!=null && board[i][j+1] != null && board[i][j+1].getValue() == board[i][j].getValue()){
+                        board[i][j+1] = new Tile(2*(board[i][j].getValue()));
                         board[i][j] = null;
                         change = true;
                     }
@@ -118,8 +120,8 @@ public class Board {
             case 'L':
                 for(int i = 0; i< SIZE; i++){
                  for(int j = 1; j< SIZE; j++){
-                    if(board[i][j-1] == board[i][j]){
-                        board[i][j-1] = new Tile(2*board[i][j+1].getValue());
+                    if(board[i][j]!=null && board[i][j-1] != null && board[i][j-1].getValue() == board[i][j].getValue()){
+                        board[i][j-1] = new Tile(2*(board[i][j].getValue()));
                         board[i][j] = null;
                         change = true;
                     }
@@ -135,14 +137,49 @@ public class Board {
 
         do {
             change = moveMax(direction);
-            // Print board state or do other necessary actions here
-            System.out.println(" hereee");
         } while (change);
     
         boolean doubleChecker = checkDouble(direction);
         while(doubleChecker){
             doubleChecker = moveMax(direction);
         }    
+    }
+
+    public boolean canMove(){
+        for(int i = 0; i < this.SIZE ; i++){
+            for(int j = 0; j < this.SIZE ; j++){
+                if(this.board[i][j] == null){
+                    return true;
+                }
+                if(i<3){
+                    if(this.board[i][j] == this.board[i+1][j]){
+                        return true;
+                    }
+                }
+                if(j<3){
+                     if(this.board[i][j] == this.board[i][j+1]){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+        
+    }
+
+    
+    //To play on the terminal
+    public void displayBoard(){
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                if(this.board[i][j] == null){
+                    System.out.print(0 + " "); 
+                }else{
+                System.out.print(this.board[i][j].getValue() + " ");
+                }
+            }
+            System.out.println(" ");
+        }
     }
 
     
