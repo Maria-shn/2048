@@ -142,7 +142,7 @@ public class Board {
         boolean doubleChecker = checkDouble(direction);
         while(doubleChecker){
             doubleChecker = moveMax(direction);
-        }    
+        }
     }
 
     public boolean canMove(){
@@ -165,6 +165,30 @@ public class Board {
         }
         return false;
         
+    }
+
+    public void setDirection(char dir){
+        this.direction = dir;
+    }
+
+    public boolean gridHasSpace(){
+        for(int i = 0; i< this.SIZE; i++){
+            for(int j = 0; j<this.SIZE; j++){
+                if(this.board[i][j] == null){
+                    return true;
+                }
+                if(i< SIZE-1){
+                    if(this.board[i][j].getValue() == this.board[i+1][j].getValue());
+                    return true;
+                }
+                if(j<SIZE-1){
+                    if(this.board[i][j].getValue() == this.board[i][j+1].getValue());
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     

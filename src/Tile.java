@@ -6,8 +6,8 @@ public class Tile {
     int value;
     
     public Tile(){
-        Color color = new Color(208, 146, 139);;
-        int value = 2;
+        color = new Color(208, 146, 139);;
+        value = 2;
     }
 
     public Tile(int x){
@@ -48,5 +48,9 @@ public class Tile {
 
     public int getValue(){
         return this.value;
+    }
+
+    public Color getColor(){
+        return this.color;
     }
 }
