@@ -65,8 +65,21 @@ public class GamePanel extends JPanel implements ActionListener {
                 if (tile != null) {
                     g2d.setColor(tile.getColor());
                     g2d.fillRect(x, y, tileSize, tileSize);
-                    g2d.setColor(Color.BLACK);
-                    g2d.drawString(String.valueOf(tile.getValue()), x + tileSize / 2, y + tileSize / 2);
+                    
+                    Font newFont = new Font("SansSerif", Font.BOLD, 36); // Customize the font (you can adjust the size)
+                    
+                    g2d.setFont(newFont);
+                    g2d.setColor(Color.WHITE);
+
+                    int value = tile.getValue();
+                    String valueStr = String.valueOf(value);
+    
+                    // Calculate the position for centered text
+                    int textX = x + (tileSize - g2d.getFontMetrics().stringWidth(valueStr)) / 2;
+                    int textY = y + (tileSize + g2d.getFontMetrics().getAscent()) / 2;
+    
+                    g2d.drawString(valueStr, textX, textY);
+                    //g2d.drawString(String.valueOf(tile.getValue()), x + tileSize / 2, y + tileSize / 2);
             }
         }
     }
