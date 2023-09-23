@@ -44,7 +44,7 @@ public class Board {
                break;
             case 'D':
                 for(int i = 0; i< SIZE; i++){
-                 for(int j = SIZE-1; j>= 0; j--){
+                 for(int j = SIZE-2; j>= 0; j--){
                     if(board[j+1][i] == null && board[j][i] != null){
                         board[j+1][i] = board[j][i];
                         board[j][i] = null;
