@@ -12,6 +12,7 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int SCREEN_WIDTH = 600;
     static final int SCREEN_HEIGHT = 600;
     static final int DELAY = 75;
+    BlockingQueue<Boolean> queue;
     Timer timer;
     boolean running = false;
     Random random;
@@ -25,6 +26,7 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.white);
         this.setFocusable(true);
+        this.queue = new LinkedBlockingQueue<>();
         this.addKeyListener(new MyKeyAdapter());
         startGame();
 
@@ -36,24 +38,11 @@ public class GamePanel extends JPanel implements ActionListener {
         grid.newTile();
         grid.newTile();
         running = true;
-        timer = new Timer(75, this);
+        timer = new Timer(DELAY, this);
         timer.start();
+        System.out.println("game started");
     }
 
-   
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(running){
-            grid.move();
-            grid.newTile();
-            if (!grid.gridHasSpace()) {
-                //TODO Handle game over logic here 
-                running = false;
-            }
-        }
-        repaint();
-    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -84,24 +73,52 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 }
 
+     @Override
+    public void actionPerformed(ActionEvent e) {
+        try{
+            boolean running = queue.take();
+            System.out.println("I am in the try");
+        if(running){
+            System.out.println("running is true");
+            grid.move();
+            grid.newTile();
+            if (!grid.gridHasSpace()) {
+                //TODO Handle game over logic here 
+                queue.put(false);
+                }
+        } 
+        repaint();
+    } catch (InterruptedException e1){
+
+    }
+    }
+
+
 
     public class MyKeyAdapter extends KeyAdapter{
+
         @Override
         public void keyPressed(KeyEvent e){
-            char direction = '\0'; // Initialize with a default value
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
-                    direction = 'L';
+                    grid.setDirection('L');
+                    System.out.println("Left key pressed");
                     break;
                 case KeyEvent.VK_RIGHT:
-                    direction = 'R';
+                    grid.setDirection('R');
                     break;
                 case KeyEvent.VK_UP:
-                    direction = 'U';
+                    grid.setDirection('U');
                     break;
                 case KeyEvent.VK_DOWN:
-                    direction = 'D';
+                    grid.setDirection('D');
                     break;
+            }
+            try {
+                queue.put(true);
+            } catch (InterruptedException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
             }
         }
     

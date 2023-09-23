@@ -1,10 +1,12 @@
 import java.util.Scanner;
 
+import javax.swing.SwingUtilities;
+
 public class Game2048 {
 
     public static void main(String[] args) {
         //terminalGame();
-        GameFrame gameFrame = new GameFrame();
+        SwingUtilities.invokeLater(() -> {GameFrame gameFrame = new GameFrame();});
     }
 
     public static void terminalGame(){
