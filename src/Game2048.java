@@ -50,7 +50,7 @@ public class Game2048 {
             gameBoard.newTile();
             
             // Check for game over condition (no more moves)
-            if (!gameBoard.canMove()) {
+            if (!gameBoard.gridHasSpace()) {
                 System.out.println("Game Over. No more moves!");
                 break;
             }

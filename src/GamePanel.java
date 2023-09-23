@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.Random;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 public class GamePanel extends JPanel implements ActionListener {
@@ -9,7 +11,6 @@ public class GamePanel extends JPanel implements ActionListener {
 
     static final int SCREEN_WIDTH = 600;
     static final int SCREEN_HEIGHT = 600;
-    static final int UNIT_SIZE = 150;
     static final int DELAY = 75;
     Timer timer;
     boolean running = false;
@@ -29,6 +30,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
+
     public void startGame(){
         grid = new Board();
         grid.newTile();
@@ -43,10 +45,10 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(running){
-            this.grid.move();
-            this.grid.newTile();
+            grid.move();
+            grid.newTile();
             if (!grid.gridHasSpace()) {
-                //TODO Handle game over logic here (e.g., displaying a message)
+                //TODO Handle game over logic here 
                 running = false;
             }
         }
@@ -71,20 +73,15 @@ public class GamePanel extends JPanel implements ActionListener {
             for (int col = 0; col < this.grid.SIZE; col++) {
                 int x = col * tileSize;
                 int y = row * tileSize;
-                Tile tile = grid.board[row][col]; // Get the tile from your Board
+                Tile tile = grid.board[row][col];
                 if (tile != null) {
-                // Set color or image based on tile value
                     g2d.setColor(tile.getColor());
-                // Fill the rectangle with the color or draw an image
                     g2d.fillRect(x, y, tileSize, tileSize);
-                // Draw the tile's value (e.g., text) on the tile
                     g2d.setColor(Color.BLACK);
                     g2d.drawString(String.valueOf(tile.getValue()), x + tileSize / 2, y + tileSize / 2);
             }
         }
     }
-
-    // Draw the game board and tiles based on the Board's state
 }
 
 
@@ -106,8 +103,6 @@ public class GamePanel extends JPanel implements ActionListener {
                     direction = 'D';
                     break;
             }
-            // Pass the direction to your Board and trigger game actions
-            grid.setDirection(direction);
         }
     
 }

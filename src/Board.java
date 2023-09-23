@@ -15,7 +15,8 @@ public class Board {
         this.board = new Tile[SIZE][SIZE];
         random = new Random();
     }
-
+    
+    //Adds a new tile to the board;
     public void newTile(){
         int emptyX, emptyY;
         do {
@@ -26,7 +27,7 @@ public class Board {
     }
 
     
-
+    //helper function for move()
     public boolean moveMax(char direction){
         boolean change = false;
         switch(direction){
@@ -43,7 +44,7 @@ public class Board {
                break;
             case 'D':
                 for(int i = 0; i< SIZE; i++){
-                 for(int j = SIZE-1; j<= 0; j--){
+                 for(int j = SIZE-1; j>= 0; j--){
                     if(board[j+1][i] == null && board[j][i] != null){
                         board[j+1][i] = board[j][i];
                         board[j][i] = null;
@@ -77,7 +78,9 @@ public class Board {
         }
     return change;
     }
+    
 
+    //Also a helper function for move()
     public boolean checkDouble(char direction){
 
         boolean change = false;
@@ -132,6 +135,7 @@ public class Board {
         return change;
     }
     
+    //moves tiles to the appropiate side;
     public void move(){
         boolean change = false;
 
@@ -144,45 +148,24 @@ public class Board {
             doubleChecker = moveMax(direction);
         }
     }
-
-    public boolean canMove(){
-        for(int i = 0; i < this.SIZE ; i++){
-            for(int j = 0; j < this.SIZE ; j++){
-                if(this.board[i][j] == null){
-                    return true;
-                }
-                if(i<3){
-                    if(this.board[i][j] == this.board[i+1][j]){
-                        return true;
-                    }
-                }
-                if(j<3){
-                     if(this.board[i][j] == this.board[i][j+1]){
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-        
-    }
-
+ 
+    
+    //sets the direction
     public void setDirection(char dir){
         this.direction = dir;
     }
-
+    
+    //checks for legal move
     public boolean gridHasSpace(){
         for(int i = 0; i< this.SIZE; i++){
             for(int j = 0; j<this.SIZE; j++){
                 if(this.board[i][j] == null){
                     return true;
-                }
-                if(i< SIZE-1){
-                    if(this.board[i][j].getValue() == this.board[i+1][j].getValue());
+                }else if(i>0){
+                    if(this.board[i][j].getValue() == this.board[i-1][j].getValue());
                     return true;
-                }
-                if(j<SIZE-1){
-                    if(this.board[i][j].getValue() == this.board[i][j+1].getValue());
+                }else if(j>0){
+                    if(this.board[i][j].getValue() == this.board[i][j-1].getValue());
                     return true;
                 }
             }
@@ -197,9 +180,9 @@ public class Board {
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 4; j++){
                 if(this.board[i][j] == null){
-                    System.out.print(0 + " "); 
+                    System.out.print(0 + "  "); 
                 }else{
-                System.out.print(this.board[i][j].getValue() + " ");
+                System.out.print(this.board[i][j].getValue() + "  ");
                 }
             }
             System.out.println(" ");
