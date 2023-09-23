@@ -26,7 +26,6 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.white);
         this.setFocusable(true);
-        this.queue = new LinkedBlockingQueue<>();
         this.addKeyListener(new MyKeyAdapter());
         startGame();
 
@@ -73,25 +72,21 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 }
 
-     @Override
-    public void actionPerformed(ActionEvent e) {
-        try{
-            boolean running = queue.take();
+   /*  @Override
+   public void actionPerformed(ActionEvent e) {
+            
             System.out.println("I am in the try");
         if(running){
             System.out.println("running is true");
             grid.move();
             grid.newTile();
             if (!grid.gridHasSpace()) {
-                //TODO Handle game over logic here 
-                queue.put(false);
+                
                 }
         } 
         repaint();
-    } catch (InterruptedException e1){
-
     }
-    }
+    */
 
 
 
@@ -114,13 +109,20 @@ public class GamePanel extends JPanel implements ActionListener {
                     grid.setDirection('D');
                     break;
             }
-            try {
-                queue.put(true);
-            } catch (InterruptedException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
+            grid.move(); // Update the game state directly
+            grid.newTile(); // Generate a new tile
+
+            if (!grid.gridHasSpace()) {
+                // Handle game over logic here
+                    }
+    
         }
     
 }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+    }
 }

@@ -4,7 +4,7 @@ public class GameFrame extends JFrame {
     
     GameFrame(){
         this.add(new GamePanel());
-        this.setTitle("2048");
+        this.setTitle("Game2048");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.pack();

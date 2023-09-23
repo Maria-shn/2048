@@ -16,7 +16,7 @@ public class Game2048 {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            // Clear the terminal screen (if supported)
+            // Clear the terminal screen
             System.out.print("\033[H\033[2J");
             System.out.flush();
 
