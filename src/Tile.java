@@ -7,7 +7,7 @@ public class Tile {
     
     public Tile(){
         this.color = new Color(208, 146, 139);;
-        value = 2;
+        this.value = 2;
     }
 
     public Tile(int x){
