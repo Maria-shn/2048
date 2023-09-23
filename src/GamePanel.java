@@ -111,6 +111,7 @@ public class GamePanel extends JPanel implements ActionListener {
             }
             grid.move(); // Update the game state directly
             grid.newTile(); // Generate a new tile
+            repaint();
 
             if (!grid.gridHasSpace()) {
                 // Handle game over logic here
