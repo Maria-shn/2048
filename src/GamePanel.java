@@ -116,7 +116,6 @@ public class GamePanel extends JPanel implements ActionListener {
             }
             repaint();
              if (!grid.gridHasSpace()) {
-                System.out.println("grid is full");
                 gameOver = true;
              }
     
