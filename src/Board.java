@@ -158,7 +158,7 @@ public class Board {
         switch(direction){
             case 'D':
                for(int i = 0; i< SIZE; i++){
-                 for(int j = 0; j< SIZE-2; j++){
+                 for(int j = 0; j< SIZE-1; j++){
                     if(board[j][i]!= null && (board[j+1][i] == null || board[j+1][i].getValue() == board[j][i].getValue())){
                     return true;
                  }
