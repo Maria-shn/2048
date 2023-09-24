@@ -1,6 +1,3 @@
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
 import java.util.Random;
 
 public class Board {
@@ -18,7 +15,7 @@ public class Board {
     
     //Adds a new tile to the board;
     public void newTile(){
-        int emptyX, emptyY, tileValue;
+        int emptyX, emptyY;
         do {
             emptyX = random.nextInt(SIZE); 
             emptyY = random.nextInt(SIZE);
@@ -162,8 +159,8 @@ public class Board {
     
     //checks for legal move
     public boolean gridHasSpace(){
-        for(int i = 0; i< this.SIZE; i++){
-            for(int j = 0; j<this.SIZE; j++){
+        for(int i = 0; i< Board.SIZE; i++){
+            for(int j = 0; j<Board.SIZE; j++){
                 if(this.board[i][j] == null){
                     return true;
                 }else if(i>0){
