@@ -2,7 +2,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.Random;
-import java.util.concurrent.BlockingQueue;
 
 
 public class GamePanel extends JPanel implements ActionListener {
@@ -11,10 +10,10 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int SCREEN_WIDTH = 600;
     static final int SCREEN_HEIGHT = 600;
     static final int DELAY = 75;
-    BlockingQueue<Boolean> queue;
     Timer timer;
     boolean running = false;
     Random random;
+    JButton replayButton;
     Board grid;
     boolean gameOver = false;
 
@@ -28,6 +27,20 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
         startGame();
+
+        replayButton = new JButton("Replay");
+        replayButton.setFont(new Font("Ink Free", Font.BOLD, 24));
+        replayButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startGame(); 
+                gameOver = false;
+                replayButton.setVisible(false);
+                repaint();
+            }
+        });
+        this.add(replayButton);
+        replayButton.setVisible(false);
 
     }
 
@@ -46,7 +59,7 @@ public class GamePanel extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        int tileSize = SCREEN_WIDTH / Board.SIZE; // Calculate tile size based on panel size and board size
+        int tileSize = SCREEN_WIDTH / Board.SIZE; 
 
         for (int row = 0; row < Board.SIZE; row++) {
             for (int col = 0; col < Board.SIZE; col++) {
@@ -65,7 +78,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     g2d.setColor(tile.getColor());
                     g2d.fillRect(x, y, tileSize, tileSize);
                     
-                    Font newFont = new Font("SansSerif", Font.BOLD, 36); // Customize the font (you can adjust the size)
+                    Font newFont = new Font("SansSerif", Font.BOLD, 36);
                     
                     g2d.setFont(newFont);
                     g2d.setColor(Color.WHITE);
@@ -86,7 +99,10 @@ public class GamePanel extends JPanel implements ActionListener {
          g.setColor(Color.BLACK);
          g.setFont(new Font("Ink Free", Font.BOLD, 75));
          FontMetrics metrics1 = getFontMetrics(g.getFont());
-         g.drawString("Game Over", (SCREEN_WIDTH - metrics1.stringWidth("Game Over"))/2, SCREEN_HEIGHT/2);              
+         g.drawString("Game Over", (SCREEN_WIDTH - metrics1.stringWidth("Game Over"))/2, SCREEN_HEIGHT/2);
+         
+         replayButton.setBounds(SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 + 50, 200, 50);
+         replayButton.setVisible(true);
         }
 
 
@@ -111,8 +127,8 @@ public class GamePanel extends JPanel implements ActionListener {
                     break;
             }
             if(grid.legalMove()){
-            grid.move(); // Update the game state directly 
-            grid.newTile(); // Generate a new tile
+            grid.move(); 
+            grid.newTile(); 
             }
             repaint();
              if (!grid.gridHasSpace()) {
