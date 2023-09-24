@@ -16,6 +16,7 @@ public class GamePanel extends JPanel implements ActionListener {
     boolean running = false;
     Random random;
     Board grid;
+    boolean gameOver = false;
 
 
 
@@ -53,7 +54,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 int y = row * tileSize;
                 g2d.drawRect(x, y, tileSize, tileSize);
             }
-}
+         }
 
         for (int row = 0; row < Board.SIZE; row++) {
             for (int col = 0; col < Board.SIZE; col++) {
@@ -80,6 +81,15 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         }
     }
+    //GAME OVER logic
+    if (gameOver) {
+         g.setColor(Color.red);
+         g.setFont(new Font("Ink Free", Font.BOLD, 75));
+         FontMetrics metrics1 = getFontMetrics(g.getFont());
+         g.drawString("Game Over", (SCREEN_WIDTH - metrics1.stringWidth("Game Over"))/2, SCREEN_HEIGHT/2);              
+        }
+
+
 }
 
     public class MyKeyAdapter extends KeyAdapter{
@@ -105,10 +115,10 @@ public class GamePanel extends JPanel implements ActionListener {
             grid.newTile(); // Generate a new tile
             }
             repaint();
-
-            if (!grid.gridHasSpace()) {
-                // Handle game over logic here
-                    }
+             if (!grid.gridHasSpace()) {
+                System.out.println("grid is full");
+                gameOver = true;
+             }
     
         }
     

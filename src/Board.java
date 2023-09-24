@@ -185,13 +185,14 @@ public class Board {
                break;
             case 'R':
                 for(int i = 0; i< SIZE; i++){
-                 for(int j = 0; j< SIZE-2; j++){
+                 for(int j = 0; j< SIZE-1; j++){
                    if(board[i][j]!= null && (board[i][j+1] == null || board[i][j+1].getValue() == board[i][j].getValue())){
                     return true;
                  }
                 }
             }
         }
+        
         return false;
         }
     
@@ -203,14 +204,16 @@ public class Board {
                 if(this.board[i][j] == null){
                     return true;
                 }else if(i>0){
-                    if(this.board[i][j].getValue() == this.board[i-1][j].getValue());
+                    if(this.board[i][j].getValue() == this.board[i-1][j].getValue()){
                     return true;
+                    }
                 }else if(j>0){
-                    if(this.board[i][j].getValue() == this.board[i][j-1].getValue());
+                    if(this.board[i][j].getValue() == this.board[i][j-1].getValue()){
                     return true;
                 }
             }
         }
+    }
 
         return false;
     }
