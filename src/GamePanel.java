@@ -3,7 +3,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 
 public class GamePanel extends JPanel implements ActionListener {
@@ -84,24 +83,6 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 }
-
-   /*  @Override
-   public void actionPerformed(ActionEvent e) {
-            
-            System.out.println("I am in the try");
-        if(running){
-            System.out.println("running is true");
-            grid.move();
-            grid.newTile();
-            if (!grid.gridHasSpace()) {
-                
-                }
-        } 
-        repaint();
-    }
-    */
-
-
 
     public class MyKeyAdapter extends KeyAdapter{
 
