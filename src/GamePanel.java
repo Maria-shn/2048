@@ -47,18 +47,18 @@ public class GamePanel extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        int tileSize = SCREEN_WIDTH / this.grid.SIZE; // Calculate tile size based on panel size and board size
+        int tileSize = SCREEN_WIDTH / Board.SIZE; // Calculate tile size based on panel size and board size
 
-        for (int row = 0; row < this.grid.SIZE; row++) {
-            for (int col = 0; col < this.grid.SIZE; col++) {
+        for (int row = 0; row < Board.SIZE; row++) {
+            for (int col = 0; col < Board.SIZE; col++) {
                 int x = col * tileSize;
                 int y = row * tileSize;
                 g2d.drawRect(x, y, tileSize, tileSize);
             }
 }
 
-        for (int row = 0; row < this.grid.SIZE; row++) {
-            for (int col = 0; col < this.grid.SIZE; col++) {
+        for (int row = 0; row < Board.SIZE; row++) {
+            for (int col = 0; col < Board.SIZE; col++) {
                 int x = col * tileSize;
                 int y = row * tileSize;
                 Tile tile = grid.board[row][col];

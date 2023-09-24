@@ -18,12 +18,17 @@ public class Board {
     
     //Adds a new tile to the board;
     public void newTile(){
-        int emptyX, emptyY;
+        int emptyX, emptyY, tileValue;
         do {
             emptyX = random.nextInt(SIZE); 
             emptyY = random.nextInt(SIZE);
         } while (this.board[emptyX][emptyY] != null); 
-        this.board[emptyX][emptyY] = new Tile((random.nextInt(2) + 1) * 2);
+        double randomNum = random.nextDouble(1);
+        if(randomNum<0.85){
+        this.board[emptyX][emptyY] = new Tile(2);
+        }else{
+            this.board[emptyX][emptyY] = new Tile(4);
+        }
     }
 
     
