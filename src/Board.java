@@ -91,8 +91,6 @@ public class Board {
                for(int i = 0; i< SIZE; i++){
                  for(int j = 1; j< SIZE; j++){
                     if(board[j][i]!=null && board[j-1][i] != null && board[j-1][i].getValue() == board[j][i].getValue()){
-                        System.out.println("theres a double");
-                        System.out.println(board[j][i].getValue());
                         board[j-1][i] = new Tile(2*(board[j][i].getValue()));
                         board[j][i] = null;
                         change = true;
@@ -140,7 +138,6 @@ public class Board {
     //moves tiles to the appropiate side;
     public void move(){
         boolean change = false;
-
         do {
             change = moveMax(direction);
         } while (change);
@@ -156,6 +153,48 @@ public class Board {
     public void setDirection(char dir){
         this.direction = dir;
     }
+
+    public boolean legalMove(){
+        switch(direction){
+            case 'D':
+               for(int i = 0; i< SIZE; i++){
+                 for(int j = 0; j< SIZE-2; j++){
+                    if(board[j][i]!= null && (board[j+1][i] == null || board[j+1][i].getValue() == board[j][i].getValue())){
+                    return true;
+                 }
+               }
+            }
+               break;
+            case 'U':
+                for(int i = 0; i< SIZE; i++){
+                 for(int j = SIZE-1; j>0; j--){
+                    if(board[j][i]!= null && (board[j-1][i] == null || board[j-1][i].getValue() == board[j][i].getValue())){
+                       return true;
+                 }
+                 }
+            }  
+               break;
+            case 'L':
+                for(int i = 0; i< SIZE; i++){
+                 for(int j = SIZE-1; j>0; j--){
+                    if(board[i][j]!= null && (board[i][j-1] == null || board[i][j-1].getValue() == board[i][j].getValue())){
+                    return true;
+                 }
+                 }
+                }
+               break;
+            case 'R':
+                for(int i = 0; i< SIZE; i++){
+                 for(int j = 0; j< SIZE-2; j++){
+                   if(board[i][j]!= null && (board[i][j+1] == null || board[i][j+1].getValue() == board[i][j].getValue())){
+                    return true;
+                 }
+                }
+            }
+        }
+        return false;
+        }
+    
     
     //checks for legal move
     public boolean gridHasSpace(){

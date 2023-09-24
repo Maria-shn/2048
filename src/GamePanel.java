@@ -38,7 +38,6 @@ public class GamePanel extends JPanel implements ActionListener {
         running = true;
         timer = new Timer(DELAY, this);
         timer.start();
-        System.out.println("game started");
     }
 
 
@@ -78,7 +77,6 @@ public class GamePanel extends JPanel implements ActionListener {
                     int textY = y + (tileSize + g2d.getFontMetrics().getAscent()) / 2;
     
                     g2d.drawString(valueStr, textX, textY);
-                    //g2d.drawString(String.valueOf(tile.getValue()), x + tileSize / 2, y + tileSize / 2);
             }
         }
     }
@@ -91,7 +89,6 @@ public class GamePanel extends JPanel implements ActionListener {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
                     grid.setDirection('L');
-                    System.out.println("Left key pressed");
                     break;
                 case KeyEvent.VK_RIGHT:
                     grid.setDirection('R');
@@ -103,8 +100,10 @@ public class GamePanel extends JPanel implements ActionListener {
                     grid.setDirection('D');
                     break;
             }
-            grid.move(); // Update the game state directly
+            if(grid.legalMove()){
+            grid.move(); // Update the game state directly 
             grid.newTile(); // Generate a new tile
+            }
             repaint();
 
             if (!grid.gridHasSpace()) {
