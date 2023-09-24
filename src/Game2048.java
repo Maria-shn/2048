@@ -5,8 +5,7 @@ import javax.swing.SwingUtilities;
 public class Game2048 {
 
     public static void main(String[] args) {
-        //terminalGame();
-        SwingUtilities.invokeLater(() -> {GameFrame gameFrame = new GameFrame();});
+        terminalGame();
     }
 
     public static void terminalGame(){
@@ -24,11 +23,15 @@ public class Game2048 {
             gameBoard.displayBoard();
 
             // Get user input
-            System.out.println("Enter direction (W/A/S/D or Q to quit): ");
+            System.out.println("Enter direction (W/A/S/D or Q to quit or G to play the GUI version): ");
             String input = scanner.nextLine().toUpperCase();
             
             if (input.equals("Q")) {
                 System.out.println("Game Over. Quitting.");
+                break;
+            }
+            if(input.equals("G") || input.equals("g")){
+                SwingUtilities.invokeLater(() -> {GameFrame gameFrame = new GameFrame();});
                 break;
             }
 
