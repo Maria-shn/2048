@@ -16,6 +16,9 @@ public class GamePanel extends JPanel implements ActionListener {
     JButton replayButton;
     Board grid;
     boolean gameOver = false;
+    boolean reach2048 = false;
+    boolean show2048 = true;
+    boolean reach8192 = false;
 
 
 
@@ -104,6 +107,33 @@ public class GamePanel extends JPanel implements ActionListener {
          replayButton.setBounds(SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 + 50, 200, 50);
          replayButton.setVisible(true);
         }
+    
+    if(reach8192){
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Ink Free", Font.BOLD, 75));
+        FontMetrics metrics1 = getFontMetrics(g.getFont());
+        g.drawString("That's all, folks!", (SCREEN_WIDTH - metrics1.stringWidth("That's all, folks!"))/2, SCREEN_HEIGHT/2);
+         
+        replayButton.setBounds(SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 + 50, 200, 50);
+        replayButton.setVisible(true);
+    }
+
+    if(reach2048 && show2048){
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Ink Free", Font.BOLD, 30));
+        FontMetrics metrics1 = getFontMetrics(g.getFont());
+        g.drawString("You reached 2048! Keep Going!", (SCREEN_WIDTH - metrics1.stringWidth("You reached 2048! Keep Going!"))/2, SCREEN_HEIGHT/2);
+        Timer hideMessageTimer = new Timer(4000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                show2048 = false;
+                repaint(); // Repaint to hide the message
+            }
+        });
+        hideMessageTimer.setRepeats(false); // Only execute once
+        hideMessageTimer.start();
+         
+    }
 
 
 }
@@ -133,6 +163,12 @@ public class GamePanel extends JPanel implements ActionListener {
             repaint();
              if (!grid.gridHasSpace()) {
                 gameOver = true;
+             }
+             int endCase = grid.numReach();
+             if(endCase == 1){
+                reach2048 = true;
+             }else if(endCase == 2){
+                reach8192 = true;
              }
     
         }

@@ -218,6 +218,19 @@ public class Board {
         return false;
     }
 
+    public int numReach(){
+        for(int i = 0; i< Board.SIZE; i++){
+            for(int j = 0; j< Board.SIZE; j++){
+                if(this.board[i][j].getValue() == 2048){
+                    return 1;
+                }else if(this.board[i][j].getValue() == 8192){
+                    return 2;
+                }
+            }
+        }
+        return 0;
+    }
+
     
     //To play on the terminal
     public void displayBoard(){
