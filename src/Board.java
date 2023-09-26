@@ -29,7 +29,7 @@ public class Board {
     }
 
     
-    //helper function for move()
+    //helper function for move() moves tile to the required direction
     public boolean moveMax(char direction){
         boolean change = false;
         switch(direction){
@@ -202,19 +202,24 @@ public class Board {
         for(int i = 0; i< Board.SIZE; i++){
             for(int j = 0; j<Board.SIZE; j++){
                 if(this.board[i][j] == null){
+                    System.out.println(i + "  null " + j);
                     return true;
-                }else if(i>0){
+                }
+                if(i>0){
                     if(this.board[i][j].getValue() == this.board[i-1][j].getValue()){
+                        System.out.println(i + " vertical " + j);
                     return true;
                     }
-                }else if(j>0){
+                }
+                if(j>0){
                     if(this.board[i][j].getValue() == this.board[i][j-1].getValue()){
+                        System.out.println(i + " horizontal " + j);
                     return true;
                 }
             }
         }
     }
-
+    System.out.println("why");
         return false;
     }
 
