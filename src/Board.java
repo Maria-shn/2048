@@ -4,6 +4,7 @@ public class Board {
     
     Tile board[][];
     static final int SIZE = 4;
+    private static final double TILE_2_PROBABILITY = 0.85;
     char direction;
     Random random;
     
@@ -16,16 +17,18 @@ public class Board {
     //Adds a new tile to the board;
     public void newTile(){
         int emptyX, emptyY;
+
+        //searches for an empty cell on the board
         do {
             emptyX = random.nextInt(SIZE); 
             emptyY = random.nextInt(SIZE);
         } while (this.board[emptyX][emptyY] != null); 
+
+        //assigns randomly a tile of value 2 or 4
         double randomNum = random.nextDouble(1);
-        if(randomNum<0.85){
-        this.board[emptyX][emptyY] = new Tile(2);
-        }else{
-            this.board[emptyX][emptyY] = new Tile(4);
-        }
+        int tileValue = (randomNum < TILE_2_PROBABILITY) ? 2 : 4;
+        this.board[emptyX][emptyY] = new Tile(tileValue);
+        
     }
 
     
@@ -82,7 +85,7 @@ public class Board {
     }
     
 
-    //Also a helper function for move()
+    //After all tiles have been moved we need to check if there are two adajcent tile with the same value, double one and remove the other
     public boolean checkDouble(char direction){
 
         boolean change = false;
@@ -154,6 +157,9 @@ public class Board {
         this.direction = dir;
     }
 
+    //Checks if the move the user wants to make can be done, ie if after pressing a key the board has changed in any way.
+    //The move is legal if there is an empty space in the desired direction, or if there are two tile with the same value 
+    //in the desire direction (eg if UP then twin tiles should be vertically arranged)
     public boolean legalMove(){
         switch(direction){
             case 'D':
@@ -197,32 +203,31 @@ public class Board {
         }
     
     
-    //checks for legal move
+    //checks if grid has space or if it is game over
     public boolean gridHasSpace(){
         for(int i = 0; i< Board.SIZE; i++){
             for(int j = 0; j<Board.SIZE; j++){
                 if(this.board[i][j] == null){
-                    System.out.println(i + "  null " + j);
                     return true;
                 }
                 if(i>0){
                     if(this.board[i][j].getValue() == this.board[i-1][j].getValue()){
-                        System.out.println(i + " vertical " + j);
                     return true;
                     }
                 }
                 if(j>0){
                     if(this.board[i][j].getValue() == this.board[i][j-1].getValue()){
-                        System.out.println(i + " horizontal " + j);
                     return true;
                 }
             }
         }
     }
-    System.out.println("why");
+
         return false;
     }
 
+
+    //User wins once 2048 is reached, adn game terminates if 8192 reached
     public int numReach(){
         for(int i = 0; i< Board.SIZE; i++){
             for(int j = 0; j< Board.SIZE; j++){
@@ -237,7 +242,7 @@ public class Board {
     }
 
     
-    //To play on the terminal
+    //Displays board if playing on the terminal
     public void displayBoard(){
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 4; j++){
